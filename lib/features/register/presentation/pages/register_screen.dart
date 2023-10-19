@@ -155,7 +155,7 @@ class RegisteScreen extends StatelessWidget {
                                 child: Text(
                                   "Sign Up",
                                   style: GoogleFonts.poppins(
-                                      color: AppColors.primaryColor, fontSize: 20.sp),
+                                       color: AppColors.primaryColor, fontSize: 20.sp),
                                 ),
                               )))
                     ],
