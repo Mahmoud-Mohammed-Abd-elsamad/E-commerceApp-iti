@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/features/home/presentation/pages/home_screen.dart';
 import 'package:ecommerce_app/features/login/data/data_sources/login_data_source.dart';
 import 'package:ecommerce_app/features/login/presentation/manager/login_cubit.dart';
 import 'package:ecommerce_app/features/login/presentation/pages/login_screen.dart';
@@ -41,6 +42,13 @@ class AppRoutes {
                 create: (BuildContext context) => RegisterCubit(
                     registerDataSource: RemoteRegisterDataSource()),
                 child: RegisteScreen());
+          },
+        );
+
+      case Routes.home:
+        return MaterialPageRoute(
+          builder: (context) {
+            return HomeScreen();
           },
         );
 
