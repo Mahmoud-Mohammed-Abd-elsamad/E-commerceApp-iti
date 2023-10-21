@@ -26,6 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
 
 
      login()async{
+       emit(LoginShowLoadingState());
       LoginDataRepo loginDomainRepo = LoginDataRepo(loginDataSource);
       LoginUseCase loginUseCase = LoginUseCase(loginDomainRepo);
 

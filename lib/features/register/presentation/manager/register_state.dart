@@ -4,7 +4,7 @@ part of 'register_cubit.dart';
 abstract class RegisterState {}
 
 class RegisterStateInitial extends RegisterState {}
-class RegisterStateSowLoading extends RegisterState {}
+class RegisterStateShowLoading extends RegisterState {}
 class RegisterStateSuccess extends RegisterState {
   final RegisterEntity model;
   RegisterStateSuccess(this.model);

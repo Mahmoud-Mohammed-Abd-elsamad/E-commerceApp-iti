@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/config/routes/routes.dart';
 import 'package:ecommerce_app/features/register/presentation/manager/register_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/cach_helper.dart';
 import '../widgets/custome_form_text_field.dart';
 
 class RegisteScreen extends StatelessWidget {
@@ -15,10 +17,10 @@ class RegisteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: BlocConsumer(
+      body: BlocConsumer<RegisterCubit,RegisterState>(
         builder: (BuildContext context, state) {
 
-          if(state is RegisterStateSowLoading){
+          if(state is RegisterStateShowLoading){
             return Center(child: CircularProgressIndicator(),);
           }else{
             return Form(
@@ -144,9 +146,6 @@ class RegisteScreen extends StatelessWidget {
                                 .validate()) {
                               context
                                   .read<RegisterCubit>().register();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('register success')),
-                              );
                             }
                           },
                           child: Center(
@@ -166,7 +165,16 @@ class RegisteScreen extends StatelessWidget {
           }
         }, listener: (BuildContext context, Object? state) {
           if(state is RegisterStateFailure){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('register failure')),
+            );
             return _showAlertDialog(context);
+          }else if(state is RegisterStateSuccess){
+            CacheHelper.saveData(stringToken: state.model.token!);
+            Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('register success')),
+            );
           }
       },
 
@@ -180,11 +188,11 @@ class RegisteScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog( // <-- SEE HERE
-          title: const Text('Cancel booking'),
+          title: const Text('Error'),
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Login Failed'),
+                Text('Register Failed'),
               ],
             ),
           ),

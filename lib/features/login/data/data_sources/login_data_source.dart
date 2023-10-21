@@ -12,10 +12,16 @@ abstract class LoginDataSource {
 }
 
 class RemoteLoginDataSource extends LoginDataSource {
+
+  var string= "00";
+
   @override
   Future<Either<Failures, RegisterModel>> login(LoginBody loginBody) async {
     try {
       final dio = Dio();
+      print("${loginBody.password} =================");
+      print("${loginBody.email} =================");
+
 
       var response = await dio.post(
           "${Constants.BaseUrl}${EndPoint.login}",
@@ -24,11 +30,13 @@ class RemoteLoginDataSource extends LoginDataSource {
       if (response.statusCode == 200 || response.statusCode == 201) {
         RegisterModel registerModel = RegisterModel.fromJson(response.data);
 
+       string =  registerModel.message?? "2222";
         return Right(registerModel);
       } else {
         return Left(RemoteFailure("failed to Login"));
       }
     } catch (e) {
+      print("$string 3=======================================");
       return Left(RemoteFailure(e.toString()));
     }
   }

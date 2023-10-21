@@ -29,7 +29,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
 
   register() async{
-    emit(RegisterStateSowLoading());
+    emit(RegisterStateShowLoading());
 
     RegisterDomainRepo registerDomainRepo = RegisterDataRepo(registerDataSource);
     RegisterUseCse useCse =  RegisterUseCse(registerDomainRepo);

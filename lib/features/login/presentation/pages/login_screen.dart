@@ -1,5 +1,8 @@
+import 'package:ecommerce_app/config/routes/routes.dart';
+import 'package:ecommerce_app/core/utils/cach_helper.dart';
 import 'package:ecommerce_app/features/home/presentation/pages/home_screen.dart';
 import 'package:ecommerce_app/features/login/presentation/manager/login_cubit.dart';
+import 'package:ecommerce_app/features/register/presentation/manager/register_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: BlocBuilder<LoginCubit,LoginState>(
+      body: BlocConsumer<LoginCubit,LoginState>(
         builder: (BuildContext context, state) {
           if(state is LoginShowLoadingState){
             return const Center(child: CircularProgressIndicator(),);
@@ -98,12 +101,8 @@ class LoginScreen extends StatelessWidget {
                               .validate()) {
                             context
                                 .read<LoginCubit>().login();
-                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                                HomeScreen()), (Route<dynamic> route) => false);
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('login success')),
-                            );
+
                           }
                         },
                         child: Center(
@@ -120,9 +119,51 @@ class LoginScreen extends StatelessWidget {
               ),
             );
           }
-        },
+        },listener: (context, state) {
+        if(state is LoginFailureState){
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('login failure')),
+          );
+          return _showAlertDialog(context);
+        }
+          if(state is LoginSuccessState){
+            CacheHelper.saveData(stringToken: state.model.token!);
+            Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('login success')),
+            );
+          }
+      },
         
       ),
     );
   }
+  void _showAlertDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog( // <-- SEE HERE
+          title: const Text('Error'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(' Login Failed'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+
+            TextButton(
+              child: const Text('ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
