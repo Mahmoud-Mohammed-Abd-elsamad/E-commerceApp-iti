@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/config/routes/routes.dart';
+import 'package:ecommerce_app/core/utils/app_colors.dart';
 import 'package:ecommerce_app/core/utils/cach_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class _MyAppState extends State<MyApp> {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_ , child) {
         return MaterialApp(
+          theme: ThemeData(
+              canvasColor: AppColors.primaryColor
+          ),
           debugShowCheckedModeBanner: false,
           initialRoute: initialRoute,
           onGenerateRoute: (settings) => AppRoutes.onGenerate(settings),

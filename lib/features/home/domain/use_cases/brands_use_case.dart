@@ -10,7 +10,7 @@ class BrandsUseCase{
  HomeDomainRepo homeDomainRepo;
  BrandsUseCase(this.homeDomainRepo);
 
- Future<Either<Failures,CategoriseEntity>> call(){
+ Future<Either<Failures,CategoriesEntity>> call(){
   return homeDomainRepo.getBrands();
 
   }

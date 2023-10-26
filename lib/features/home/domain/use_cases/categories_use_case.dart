@@ -10,7 +10,7 @@ class CategoriesUseCase{
  HomeDomainRepo homeDomainRepo;
  CategoriesUseCase(this.homeDomainRepo);
 
- Future<Either<Failures,CategoriseEntity>> call(){
+ Future<Either<Failures,CategoriesEntity>> call(){
   return homeDomainRepo.getCategories();
 
   }

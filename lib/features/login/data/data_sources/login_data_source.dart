@@ -13,7 +13,6 @@ abstract class LoginDataSource {
 
 class RemoteLoginDataSource extends LoginDataSource {
 
-  var string= "00";
 
   @override
   Future<Either<Failures, RegisterModel>> login(LoginBody loginBody) async {
@@ -30,13 +29,11 @@ class RemoteLoginDataSource extends LoginDataSource {
       if (response.statusCode == 200 || response.statusCode == 201) {
         RegisterModel registerModel = RegisterModel.fromJson(response.data);
 
-       string =  registerModel.message?? "2222";
         return Right(registerModel);
       } else {
         return Left(RemoteFailure("failed to Login"));
       }
     } catch (e) {
-      print("$string 3=======================================");
       return Left(RemoteFailure(e.toString()));
     }
   }

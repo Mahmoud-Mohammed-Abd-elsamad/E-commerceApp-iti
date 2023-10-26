@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/features/home/data/data_sources/home_data_source.dart';
 import 'package:ecommerce_app/features/home/presentation/pages/home_screen.dart';
 import 'package:ecommerce_app/features/login/data/data_sources/login_data_source.dart';
 import 'package:ecommerce_app/features/login/presentation/manager/login_cubit.dart';
@@ -8,6 +9,8 @@ import 'package:ecommerce_app/features/register/presentation/pages/register_scre
 import 'package:ecommerce_app/features/splash_screen/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/home/presentation/manager/home_cubit.dart';
 
 class Routes {
   static const String splash = "/";
@@ -48,7 +51,8 @@ class AppRoutes {
       case Routes.home:
         return MaterialPageRoute(
           builder: (context) {
-            return HomeScreen();
+            return BlocProvider(create: (BuildContext context) => HomeCubit(RemoteHomeDataSource()),
+            child: HomeScreen());
           },
         );
 

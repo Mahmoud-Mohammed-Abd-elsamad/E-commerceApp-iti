@@ -1,10 +1,10 @@
-class CategoriseEntity {
+class CategoriesEntity {
   int? results;
   List<Data>? data;
 
-  CategoriseEntity({this.results, this.data});
+  CategoriesEntity({this.results, this.data});
 
-  CategoriseEntity.fromJson(Map<String, dynamic> json) {
+  CategoriesEntity.fromJson(Map<String, dynamic> json) {
     results = json['results'];
     if (json['data'] != null) {
       data = <Data>[];

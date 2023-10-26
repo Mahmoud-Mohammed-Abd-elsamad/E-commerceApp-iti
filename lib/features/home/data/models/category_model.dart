@@ -1,12 +1,12 @@
 import 'package:ecommerce_app/features/home/domain/entities/category_entity.dart';
 
-class CategoriseModel  extends CategoriseEntity{
+class CategoriesModel  extends CategoriesEntity{
   Metadata? metadata;
 
 
-  CategoriseModel({super.results, this.metadata, super.data});
+  CategoriesModel({super.results, this.metadata, super.data});
 
-  CategoriseModel.fromJson(Map<String, dynamic> json) {
+  CategoriesModel.fromJson(Map<String, dynamic> json) {
     results = json['results'];
     metadata = json['metadata'] != null
         ?  Metadata.fromJson(json['metadata'])
@@ -14,7 +14,7 @@ class CategoriseModel  extends CategoriseEntity{
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add( Data.fromJson(v));
       });
     }
   }
